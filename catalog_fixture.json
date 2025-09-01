@@ -1,0 +1,44 @@
+[
+{
+    "model": "catalog.category",
+    "pk": 1,
+    "fields": {
+        "name": "Фрукты",
+        "description": "Фрукты из Краснодара"
+    }
+},
+{
+    "model": "catalog.category",
+    "pk": 2,
+    "fields": {
+        "name": "Овощи",
+        "description": "Овощииз Ростова"
+    }
+},
+{
+    "model": "catalog.product",
+    "pk": 2,
+    "fields": {
+        "name": "Груша",
+        "description": "Сладкая желтая груша",
+        "photo": "",
+        "category": 1,
+        "price": 60.0,
+        "created_at": "2025-09-01T07:52:06.636Z",
+        "updated_at": "2025-09-01T07:52:06.636Z"
+    }
+},
+{
+    "model": "catalog.product",
+    "pk": 3,
+    "fields": {
+        "name": "Слива",
+        "description": "Спелая синяя слива",
+        "photo": "",
+        "category": 1,
+        "price": 70.0,
+        "created_at": "2025-09-01T07:52:19.016Z",
+        "updated_at": "2025-09-01T07:52:19.016Z"
+    }
+}
+]
