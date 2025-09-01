@@ -51,15 +51,18 @@
                         {% csrf_token %}
                         <div class="mb-3">
                             <label for="name">Имя</label>
-                            <input type="text" name="name" class="form-control" id="name" placeholder="Ваше имя" required>
+                            <input type="text" name="name" class="form-control" id="name" placeholder="Ваше имя"
+                                   required>
                         </div>
                         <div class="mb-3">
                             <label for="phone">Телефон</label>
-                            <input type="text" name="phone" class="form-control" id="phone" placeholder="Контактный телефон" required>
+                            <input type="text" name="phone" class="form-control" id="phone"
+                                   placeholder="Контактный телефон" required>
                         </div>
                         <div class="mb-3">
                             <label for="message">Сообщение</label>
-                            <textarea type="text" name="message" class="form-control" id="message" placeholder="Ваше сообщение" required></textarea>
+                            <textarea type="text" name="message" class="form-control" id="message"
+                                      placeholder="Ваше сообщение" required></textarea>
                         </div>
                         <button type="submit" class="btn btn-lg btn-block btn-outline-primary">Отправить</button>
                     </form>
@@ -68,6 +71,16 @@
         </div>
     </div>
 
+    <h1>Контактная информация</h1>
+    {% if contact_info %}
+    {% for contact in contact_info %}
+    <p><strong>Имя:</strong> {{ contact.name }}</p>
+    <p><strong>Телефон:</strong> {{ contact.phone }}</p>
+    <p><strong>Адрес:</strong> {{ contact.message }}</p>
+    {% endfor %}
+    {% else %}
+    <p>Контактная информация отсутствует.</p>
+    {% endif %}
     <footer class="pt-4 my-md-5 pt-md-5 border-top">
         <div class="row">
             <div class="col-12 col-md">
