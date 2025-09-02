@@ -5,9 +5,12 @@ from catalog.models import Category, Product
 
 
 class Command(BaseCommand):
+    """Кастомная команда для удаления существующих записей и загрузки фикстуры"""
+
     help = "Load test data from fixture"
 
     def handle(self, *args, **kwargs):
+        """Удаление записей и загрузка из файла"""
         # Удаляем существующие записи
         Product.objects.all().delete()
         Category.objects.all().delete()

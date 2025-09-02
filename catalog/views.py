@@ -5,6 +5,7 @@ from catalog.models import ContactInfo, Product
 
 
 def home(request):
+    """Контроллер, который будет обрабатывает запросы по пути Home."""
     latest_products = Product.objects.order_by("-created_at")[:5]  # Последние 5 продуктов
     print("Latest products:")
     for product in latest_products:
@@ -14,6 +15,7 @@ def home(request):
 
 
 def contact(request):
+    """Контроллер, который будет обрабатывает запросы по пути Сontact."""
     if request.method == "POST":
         name = request.POST.get("name")
         phone = request.POST.get("phone")
