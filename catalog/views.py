@@ -10,6 +10,7 @@ def home(request):
     context = {"products": products}
     return render(request, "home.html", context)
 
+
 def product_details(request, pk):
     """Контроллер, который будет обрабатывает запросы по пути product_details."""
     product = Product.objects.get(pk=pk)
