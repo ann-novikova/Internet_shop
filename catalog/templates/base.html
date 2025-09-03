@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}Магазин{% endblock %}</title>
+    <link rel="stylesheet" href="/static/bootstrap.min.css">
+</head>
+<body>
+<div class="container mt-5">
+    {% block content %}{% endblock %}
+</div>
+<footer class="pt-4 my-md-5 pt-md-5 border-top">
+    <div class="container">
+    <div class="row">
+        <div class="col-12 col-md">
+            FruShop
+            <small class="d-block mb-3 text-muted">&copy; 2025</small>
+        </div>
+        <div class="col-6 col-md">
+            <h5>О нас</h5>
+            <ul class="list-unstyled text-small">
+                <li><a class="text-muted" href="/contacts/">Контакты</a></li>
+            </ul>
+        </div>
+        </div>
+    </div>
+</footer>
+
+<script src="/static/bootstrap.min.js"></script>
+</body>
+</html>
