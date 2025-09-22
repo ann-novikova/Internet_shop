@@ -6,12 +6,16 @@ from catalog.models import ContactInfo, Product
 
 def home(request):
     """Контроллер, который будет обрабатывает запросы по пути Home."""
-    latest_products = Product.objects.order_by("-created_at")[:5]  # Последние 5 продуктов
-    print("Latest products:")
-    for product in latest_products:
-        print(f"- {product.name}")
-    context = {"latest_products": latest_products}
+    products = Product.objects.all()
+    context = {"products": products}
     return render(request, "home.html", context)
+
+
+def product_details(request, pk):
+    """Контроллер, который будет обрабатывает запросы по пути product_details."""
+    product = Product.objects.get(pk=pk)
+    context = {"product": product}
+    return render(request, "product_details.html", context)
 
 
 def contact(request):
