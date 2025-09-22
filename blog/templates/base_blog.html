@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <title>Blog</title>
+
+    <link href="/static/bootstrap.min.css" rel="stylesheet">
+
+</head>
+
+<body class="d-flex flex-column min-vh-100">
+
+<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+    <a class="navbar-brand">Меню</a>
+    {% include 'includes/inc_main_menu.html' %}
+</nav>
+
+<main role="main">
+
+    <div class="container pt-5">
+        {% block content %}
+        {% endblock %}
+
+    </div> <!-- /container -->
+</main>
+<footer class="footer mt-auto py-3 bg-light">
+    <div class="container">
+        <p>&copy; Company 2017-2018</p>
+    </div>
+</footer>
+
+<!-- Bootstrap core JavaScript
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+<script src="/static/popper.min.js"></script>
+<script src="/static/bootstrap.min.js"></script>
+</body>
+</html>

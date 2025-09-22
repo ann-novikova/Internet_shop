@@ -1,0 +1,12 @@
+{% extends 'base_blog.html' %}
+{% block content %}
+    <div class="row mt-5">
+        {% for object in object_list %}
+            <div class="col-md-4">
+                <h2>{{ object.title }}</h2>
+                <p>{{ object.body|slice:100 }}</p>
+                <p><a class="btn btn-secondary" href="{% url 'blog:article_detail' object.pk %}" role="button">View details &raquo;</a></p>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}
