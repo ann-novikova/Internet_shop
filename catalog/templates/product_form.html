@@ -1,0 +1,24 @@
+<!-- product_form.html -->
+{% extends 'base.html' %}
+{% load my_tags %}
+
+{% block title %}Форма для продукта{% endblock %}
+
+{% block content %}
+{% include 'includes/incl_menu.html' %}
+<h2>Форма для продукта</h2>
+<form method="post", enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <div>
+        <button type="submit" class="btn btn-primary">
+            {% if product %}
+            Сохранить
+            {% else %}
+            Создать
+            {% endif %}
+        </button>
+            </div>
+        <a href="{% url 'catalog:home' %}" class="btn btn-secondary">Отмена</a>
+</form>
+{% endblock %}

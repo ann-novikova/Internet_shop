@@ -1,33 +1,36 @@
 from django.http import HttpResponse
 from django.shortcuts import render
+from django.urls import reverse_lazy
+from django.views.generic import ListView, DetailView, CreateView, UpdateView, TemplateView
 
 from catalog.models import ContactInfo, Product
 
-
-def home(request):
-    """Контроллер, который будет обрабатывает запросы по пути Home."""
-    products = Product.objects.all()
-    context = {"products": products}
-    return render(request, "home.html", context)
+class ProductListView(ListView):
+    model = Product
+    template_name = 'home.html'
+    context_object_name = 'products'
 
 
-def product_details(request, pk):
-    """Контроллер, который будет обрабатывает запросы по пути product_details."""
-    product = Product.objects.get(pk=pk)
-    context = {"product": product}
-    return render(request, "product_details.html", context)
+class ProductDetailView(DetailView):
+    model = Product
+    template_name = 'product_details.html'
+    context_object_name = 'product'
 
 
-def contact(request):
-    """Контроллер, который будет обрабатывает запросы по пути Сontact."""
-    if request.method == "POST":
-        name = request.POST.get("name")
-        phone = request.POST.get("phone")
-        message = request.POST.get("message")
-        return HttpResponse(f"Спасибо, {name}! Ваше сообщение получено.")
-    try:
-        contact_info = ContactInfo.objects.all()
-    except ContactInfo.DoesNotExist:
-        contact_info = None
-    context = {"contact_info": contact_info}
-    return render(request, "contacts.html", context)
+class ProductCreateView(CreateView):
+    model = Product
+    fields = ['name', 'category', 'photo', 'description', 'price']
+    template_name = 'product_form.html'
+    success_url = reverse_lazy('catalog:home')
+
+
+class ProductUpdateView(UpdateView):
+    model = Product
+    fields = ['name', 'category', 'photo', 'description', 'price']
+    template_name = 'product_form.html'
+    success_url = reverse_lazy('catalog:home')
+
+
+class ContactView(TemplateView):
+    template_name = 'contacts.html'
+
