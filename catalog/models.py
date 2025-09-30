@@ -37,7 +37,11 @@ class Product(models.Model):
     class Meta:
         verbose_name = "товар"
         verbose_name_plural = "товары"
-        ordering = ["category", "name",]
+        ordering = [
+            "category",
+            "name",
+        ]
+
 
 class ContactInfo(models.Model):
     """Класс для создания экземпляров контактной информации"""
