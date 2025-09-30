@@ -1,0 +1,18 @@
+{% extends 'base_blog.html' %}
+{% block content %}
+<h2>Форма для статьи</h2>
+<form method="post", enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <div>
+        <button type="submit" class="btn btn-primary">
+            {% if object %}
+            Сохранить
+            {% else %}
+            Создать
+            {% endif %}
+        </button>
+            </div>
+        <a href="{% url 'blog:article_list' %}" class="btn btn-secondary">Отмена</a>
+</form>
+{% endblock %}

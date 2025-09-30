@@ -13,6 +13,7 @@
     <p class="card-text">Описание: {{ product.description }}</p>
     <p class="card-text">Цена: {{ product.price}}</p>
     <p class="card-text">Обновлено: {{ product.updated_at | date:"d M Y"}}</p>
+    <a href="{% url 'catalog:product_update' product.pk %}" class="btn btn-secondary">Редактировать</a>
     <a href="{% url 'catalog:home' %}" class="btn btn-primary">Назад</a>
   </div>
 </div>
