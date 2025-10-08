@@ -10,7 +10,7 @@ max_size_bytes = MAX_SIZE_MB * 1024 * 1024
 
 
 class StyleFormMixin:
-
+    """Класс для стилизации форм"""
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         for field_name, field in self.fields.items():
@@ -22,6 +22,7 @@ class StyleFormMixin:
 
 
 class ProductForm(StyleFormMixin, forms.ModelForm):
+    """Класс для создания и изменения товара"""
     class Meta:
         model = Product
         exclude = (
@@ -30,12 +31,14 @@ class ProductForm(StyleFormMixin, forms.ModelForm):
         )
 
     def clean_price(self):
+        """Метод валидации цены - не может быть отрицательной"""
         price = self.cleaned_data.get("price")
         if price < 0:
             raise ValidationError("Цена не может быть отрицательной")
         return price
 
     def clean_photo(self):
+        """Метод валидации фото - соответствие размеру и формату"""
         photo = self.cleaned_data.get("photo")
         if not photo:
             return photo
@@ -48,6 +51,7 @@ class ProductForm(StyleFormMixin, forms.ModelForm):
         return photo
 
     def clean(self):
+        """Метод валидации товара с исключением запрещенных слов"""
         cleaned_data = super().clean()
         name = cleaned_data.get("name").lower().split()
         description = cleaned_data.get("description").lower().split()

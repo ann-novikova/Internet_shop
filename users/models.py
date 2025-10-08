@@ -3,6 +3,7 @@ from django.db import models
 
 
 class CustomUser(AbstractUser):
+    """Кастомная модель пользователя"""
     username = None
     email = models.EmailField(unique=True, verbose_name="Email")
     avatar = models.ImageField(
@@ -21,4 +22,5 @@ class CustomUser(AbstractUser):
         verbose_name_plural = "Пользователи"
 
     def __str__(self):
+        """Метод строкового отображения пользователя по почте"""
         return self.email
