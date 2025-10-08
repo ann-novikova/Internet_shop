@@ -1,10 +1,14 @@
 from django.contrib.auth import login
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.mail import send_mail
 from django.urls import reverse_lazy
-from django.views.generic import CreateView
+from django.views.generic import CreateView, UpdateView
+from django.contrib import messages
 
 from config.settings import EMAIL_HOST_USER
-from .forms import UserRegistrationForm
+from .forms import UserRegistrationForm, UserProfileEditForm
+from .models import CustomUser
+
 
 class RegisterView(CreateView):
     form_class = UserRegistrationForm
@@ -22,3 +26,22 @@ class RegisterView(CreateView):
         message = 'Спасибо, что зарегистрировались в нашем магазине!'
         recipient_list = [user_email]
         send_mail(subject, message, EMAIL_HOST_USER, recipient_list)
+
+
+class UserProfileEditView(LoginRequiredMixin, UpdateView):
+    model = CustomUser
+    form_class = UserProfileEditForm
+    template_name = "profile_edit.html"
+    success_url = reverse_lazy("users:profile_edit")
+
+    def get_object(self, queryset=None):
+        return self.request.user
+
+    def form_valid(self, form):
+        messages.success(self.request, "Ваш профиль был успешно обновлен!")
+        return super().form_valid(form)
+
+    def form_invalid(self, form):
+        messages.error(self.request, "Пожалуйста, исправьте ошибки в форме.")
+        return super().form_invalid(form)
+
