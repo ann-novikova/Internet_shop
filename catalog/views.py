@@ -18,7 +18,7 @@ class ProductDetailView(LoginRequiredMixin, DetailView):
     context_object_name = "product"
 
 
-class ProductCreateView(LoginRequiredMixin,CreateView):
+class ProductCreateView(LoginRequiredMixin, CreateView):
     model = Product
     form_class = ProductForm
     template_name = "product_form.html"

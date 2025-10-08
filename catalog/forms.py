@@ -1,6 +1,6 @@
 from django import forms
 from django.core.exceptions import ValidationError
-from django.forms import BooleanField, CheckboxInput
+from django.forms import CheckboxInput
 
 from .models import Product
 
@@ -14,11 +14,11 @@ class StyleFormMixin:
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         for field_name, field in self.fields.items():
-            existing = field.widget.attrs.get('class', '')
+            existing = field.widget.attrs.get("class", "")
             if isinstance(field, forms.BooleanField) or isinstance(field.widget, CheckboxInput):
-                field.widget.attrs['class'] = (existing + ' form-check-input').strip()
+                field.widget.attrs["class"] = (existing + " form-check-input").strip()
             else:
-                field.widget.attrs['class'] = (existing + ' form-control').strip()
+                field.widget.attrs["class"] = (existing + " form-control").strip()
 
 
 class ProductForm(StyleFormMixin, forms.ModelForm):

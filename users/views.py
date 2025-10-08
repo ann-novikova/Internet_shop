@@ -12,8 +12,8 @@ from .models import CustomUser
 
 class RegisterView(CreateView):
     form_class = UserRegistrationForm
-    template_name = 'register.html'
-    success_url = reverse_lazy('users:login')
+    template_name = "register.html"
+    success_url = reverse_lazy("users:login")
 
     def form_valid(self, form):
         user = form.save()
@@ -22,8 +22,8 @@ class RegisterView(CreateView):
         return super().form_valid(form)
 
     def send_welcome_email(self, user_email):
-        subject = 'Добро пожаловать в наш интернет магазин'
-        message = 'Спасибо, что зарегистрировались в нашем магазине!'
+        subject = "Добро пожаловать в наш интернет магазин"
+        message = "Спасибо, что зарегистрировались в нашем магазине!"
         recipient_list = [user_email]
         send_mail(subject, message, EMAIL_HOST_USER, recipient_list)
 
@@ -44,4 +44,3 @@ class UserProfileEditView(LoginRequiredMixin, UpdateView):
     def form_invalid(self, form):
         messages.error(self.request, "Пожалуйста, исправьте ошибки в форме.")
         return super().form_invalid(form)
-
