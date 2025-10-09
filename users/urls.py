@@ -11,5 +11,5 @@ urlpatterns = [
     path("login/", LoginView.as_view(template_name="login.html"), name="login"),
     path("logout/", LogoutView.as_view(next_page="catalog:home"), name="logout"),
     path("register/", RegisterView.as_view(), name="register"),
-    path("profile/edit/", UserProfileEditView.as_view(), name="profile_edit"),
+    path("profile/edit/<int:pk>", UserProfileEditView.as_view(), name="profile_edit"),
 ]

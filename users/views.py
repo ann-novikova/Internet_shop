@@ -36,7 +36,7 @@ class UserProfileEditView(LoginRequiredMixin, UpdateView):
     model = CustomUser
     form_class = UserProfileEditForm
     template_name = "profile_edit.html"
-    success_url = reverse_lazy("users:profile_edit")
+    success_url = reverse_lazy("catalog:home")
 
     def get_object(self, queryset=None):
         """Метод получения информации о пользователе"""

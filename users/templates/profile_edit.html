@@ -5,6 +5,11 @@
 
 {% block content %}
 <h2>Редактирование профиль</h2>
+
+<p>user.email: {{ user.email }}</p>
+<p>form.instance.pk: {{ form.instance.pk }}</p>
+<p>form.initial: {{ form.initial }}</p>
+
 <form method="post" enctype="multipart/form-data">
     {% csrf_token %}
      {{ form.non_field_errors }}
