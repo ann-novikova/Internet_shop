@@ -7,6 +7,7 @@ from blog.models import Article
 
 class BlogListView(ListView):
     """Контроллер для просмотра списка статей"""
+
     model = Article
     extra_context = {"title": "Главная страница"}
     template_name = "article_list.html"
@@ -19,6 +20,7 @@ class BlogListView(ListView):
 
 class BlogDetail(DetailView):
     """Контроллер для просмотра конкретной статьи"""
+
     model = Article
     template_name = "article_detail.html"
     context_object_name = "object"
@@ -33,6 +35,7 @@ class BlogDetail(DetailView):
 
 class BlogCreate(PermissionRequiredMixin, CreateView):
     """Контроллер для создания статьи"""
+
     model = Article
     fields = ["title", "description", "preview", "is_published"]
     template_name = "blog_item.html"
@@ -41,7 +44,8 @@ class BlogCreate(PermissionRequiredMixin, CreateView):
 
 class BlogUpdate(PermissionRequiredMixin, UpdateView):
     """Контроллер для редактирования статьи"""
-    permission_required = 'catalog.change_article'
+
+    permission_required = "catalog.change_article"
     model = Article
     fields = ["title", "description", "preview", "is_published"]
     template_name = "blog_item.html"
@@ -50,7 +54,8 @@ class BlogUpdate(PermissionRequiredMixin, UpdateView):
 
 class BlogDelete(PermissionRequiredMixin, DeleteView):
     """Контроллер для удаления статьи"""
-    permission_required = 'catalog.delete_article'
+
+    permission_required = "catalog.delete_article"
     model = Article
     template_name = "blog_confirm_delete.html"
     success_url = reverse_lazy("blog:article_list")

@@ -46,8 +46,9 @@ class Product(models.Model):
             "name",
         ]
         permissions = [
-            ('can_unpublish_product', 'Can unpublish product'),
+            ("can_unpublish_product", "Can unpublish product"),
         ]
+
 
 class ContactInfo(models.Model):
     """Класс для создания экземпляров контактной информации"""

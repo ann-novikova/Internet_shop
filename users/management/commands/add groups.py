@@ -3,7 +3,6 @@ from django.core.management import call_command
 from django.core.management.base import BaseCommand
 
 
-
 class GroupCommand(BaseCommand):
     """Кастомная команда для козаполнения групп с настроенными правами в БД"""
 

@@ -12,6 +12,7 @@ max_size_bytes = MAX_SIZE_MB * 1024 * 1024
 
 class StyleFormMixin:
     """Класс для стилизации форм"""
+
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         for field_name, field in self.fields.items():
@@ -24,6 +25,7 @@ class StyleFormMixin:
 
 class ProductForm(StyleFormMixin, forms.ModelForm):
     """Класс для создания и изменения товара"""
+
     class Meta:
         model = Product
         exclude = (
@@ -73,10 +75,10 @@ class ProductForm(StyleFormMixin, forms.ModelForm):
             if word in EXCLUDE_WORDS:
                 self.add_error("description", "Описание продукта содержит запрещенные слова")
 
+
 class ProductModeratorForm(StyleFormMixin, forms.ModelForm):
     """Класс для редактирования модератором"""
+
     class Meta:
         model = Product
-        fields = (
-            "is_published",
-        )
+        fields = ("is_published",)
