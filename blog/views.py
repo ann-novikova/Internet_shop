@@ -1,3 +1,4 @@
+from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, DeleteView, DetailView, ListView, TemplateView, UpdateView
 
@@ -30,7 +31,7 @@ class BlogDetail(DetailView):
         return self.object
 
 
-class BlogCreate(CreateView):
+class BlogCreate(PermissionRequiredMixin, CreateView):
     """Контроллер для создания статьи"""
     model = Article
     fields = ["title", "description", "preview", "is_published"]
@@ -38,16 +39,18 @@ class BlogCreate(CreateView):
     success_url = reverse_lazy("blog:article_list")
 
 
-class BlogUpdate(UpdateView):
+class BlogUpdate(PermissionRequiredMixin, UpdateView):
     """Контроллер для редактирования статьи"""
+    permission_required = 'catalog.change_article'
     model = Article
     fields = ["title", "description", "preview", "is_published"]
     template_name = "blog_item.html"
     success_url = reverse_lazy("blog:article_list")
 
 
-class BlogDelete(DeleteView):
+class BlogDelete(PermissionRequiredMixin, DeleteView):
     """Контроллер для удаления статьи"""
+    permission_required = 'catalog.delete_article'
     model = Article
     template_name = "blog_confirm_delete.html"
     success_url = reverse_lazy("blog:article_list")

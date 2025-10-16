@@ -5,8 +5,12 @@
     <p>Содержимое: {{ object.description }}</p>
     <p>Дата публикации: {{ object.created_at }}</p>
     <p>Количество просмотров: {{ object.views_count }}</p>
+    {% if perms.blog.change_article %}
     <a href="{% url 'blog:article_update' object.pk %}" class="btn btn-warning">Изменить</a>
+    {% endif %}
+    {% if perms.blog.delete_article %}
     <a href="{% url 'blog:article_delete' object.pk %}" class="btn btn-danger">Удалить</a>
+    {% endif %}
     <a href="{% url 'blog:article_list' %}" class="btn btn-primary">Вернуться к списку</a>
 </div>
 {% endblock %}
