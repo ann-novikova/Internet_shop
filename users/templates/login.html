@@ -5,7 +5,7 @@
 
 {% block content %}
 {% include 'includes/incl_menu.html' %}
-<h2>Форма для регистрации</h2>
+<h2>Форма для входа</h2>
 <form method="post" , enctype="multipart/form-data">
     {% csrf_token %}
     {{ form.as_p }}
