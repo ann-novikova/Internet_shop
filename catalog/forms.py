@@ -28,6 +28,7 @@ class ProductForm(StyleFormMixin, forms.ModelForm):
         exclude = (
             "created_at",
             "updated_at",
+            "owner",
         )
 
     def clean_price(self):
@@ -62,3 +63,11 @@ class ProductForm(StyleFormMixin, forms.ModelForm):
         for word in description:
             if word in EXCLUDE_WORDS:
                 self.add_error("description", "Описание продукта содержит запрещенные слова")
+
+class ProductModeratorForm(StyleFormMixin, forms.ModelForm):
+    """Класс для редактирования модератором"""
+    class Meta:
+        model = Product
+        fields = (
+            "is_published",
+        )
