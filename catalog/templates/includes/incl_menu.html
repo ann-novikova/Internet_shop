@@ -2,7 +2,16 @@
     <h5 class="my-0 mr-md-auto font-weight-normal">FruShop</h5>
     <nav class="ms-5">
         <a href="{% url 'catalog:home' %}" class="p-2 btn btn-outline-primary">Каталог</a>
-        <a href="{% url 'catalog:product_create' %}" class="p-2 btn btn-outline-primary">Создать</a>
+        {% if user.is_authenticated %}
+        <form method="post" action="{% url 'users:logout' %}" style="display: inline;">
+            {% csrf_token %}
+            <button type="submit" class="p-2 btn btn-outline-primary">Выйти
+            </button>
+        <a href="{% url 'users:profile_edit' user.pk %}" class="p-2 btn btn-outline-primary">Редактировать профиль</a>
+        {% else %}
+        <a class="p-2 btn btn-outline-primary" href="{% url 'users:login' %}">Войти</a>
+        <a class="p-2 btn btn-outline-primary" href="{% url 'users:register' %}">Регистрация</a>
+        {% endif %}
         <a class="p-2 btn btn-outline-primary" href="/contacts/">Контакты</a>
     </nav>
 </div>
@@ -10,4 +19,7 @@
 <div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
     <h1 class="display-4">FruShop</h1>
     <p class="lead">Доставка свежих фруктов и овощей</p>
+    {% if user.is_authenticated %}
+    <a href="{% url 'catalog:product_create' %}" class="p-2 btn btn-outline-primary">Создать продукт</a>
+    {% endif %}
 </div>

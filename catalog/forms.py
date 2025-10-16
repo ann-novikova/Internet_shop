@@ -1,6 +1,6 @@
 from django import forms
 from django.core.exceptions import ValidationError
-from django.forms import BooleanField
+from django.forms import CheckboxInput
 
 from .models import Product
 
@@ -10,17 +10,19 @@ max_size_bytes = MAX_SIZE_MB * 1024 * 1024
 
 
 class StyleFormMixin:
-
+    """Класс для стилизации форм"""
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         for field_name, field in self.fields.items():
-            if isinstance(field, BooleanField):
-                field.widget.attrs["class"] = "form-check-input"
+            existing = field.widget.attrs.get("class", "")
+            if isinstance(field, forms.BooleanField) or isinstance(field.widget, CheckboxInput):
+                field.widget.attrs["class"] = (existing + " form-check-input").strip()
             else:
-                field.widget.attrs["class"] = "form-control"
+                field.widget.attrs["class"] = (existing + " form-control").strip()
 
 
 class ProductForm(StyleFormMixin, forms.ModelForm):
+    """Класс для создания и изменения товара"""
     class Meta:
         model = Product
         exclude = (
@@ -29,12 +31,14 @@ class ProductForm(StyleFormMixin, forms.ModelForm):
         )
 
     def clean_price(self):
+        """Метод валидации цены - не может быть отрицательной"""
         price = self.cleaned_data.get("price")
         if price < 0:
             raise ValidationError("Цена не может быть отрицательной")
         return price
 
     def clean_photo(self):
+        """Метод валидации фото - соответствие размеру и формату"""
         photo = self.cleaned_data.get("photo")
         if not photo:
             return photo
@@ -47,6 +51,7 @@ class ProductForm(StyleFormMixin, forms.ModelForm):
         return photo
 
     def clean(self):
+        """Метод валидации товара с исключением запрещенных слов"""
         cleaned_data = super().clean()
         name = cleaned_data.get("name").lower().split()
         description = cleaned_data.get("description").lower().split()

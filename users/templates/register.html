@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% load my_tags %}
+
+{% block title %}Форма для регистрации{% endblock %}
+
+{% block content %}
+{% include 'includes/incl_menu.html' %}
+  <h2>Регистрация</h2>
+  <form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Зарегистрироваться</button>
+  </form>
+{% endblock %}
