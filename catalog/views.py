@@ -88,10 +88,3 @@ class ListProductsCategoryDetailView(DetailView):
         category_id = self.kwargs.get("pk")
         context["categories"] = get_products_by_category(category_id)
         return context
-
-    def get_queryset(self):
-        queryset = cache.get("list_products")
-        if not queryset:
-            queryset = super().get_queryset()
-            cache.set("list_products", queryset, 60 * 15)
-        return queryset
