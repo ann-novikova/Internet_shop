@@ -1,6 +1,7 @@
 from django import forms
 from django.core.exceptions import ValidationError
 from django.forms import CheckboxInput
+from PIL import Image
 
 from .models import Product
 
@@ -11,6 +12,7 @@ max_size_bytes = MAX_SIZE_MB * 1024 * 1024
 
 class StyleFormMixin:
     """Класс для стилизации форм"""
+
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         for field_name, field in self.fields.items():
@@ -23,11 +25,13 @@ class StyleFormMixin:
 
 class ProductForm(StyleFormMixin, forms.ModelForm):
     """Класс для создания и изменения товара"""
+
     class Meta:
         model = Product
         exclude = (
             "created_at",
             "updated_at",
+            "owner",
         )
 
     def clean_price(self):
@@ -46,8 +50,16 @@ class ProductForm(StyleFormMixin, forms.ModelForm):
         if photo.size > max_size_bytes:
             raise ValidationError(f"Размер файла не должен превышать {MAX_SIZE_MB} МБ.")
 
-        if photo.format not in ["JPEG", "PNG"]:
-            raise ValidationError("Фото неправильного формата")
+        try:
+            photo.seek(0)
+            image = Image.open(photo)
+            image_format = image.format.upper()  # Убедитесь, что формат в верхнем регистре для сравнения
+            if image_format not in ["JPEG", "PNG"]:
+                raise ValidationError("Фото неправильного формата. Допустимые форматы: JPEG, PNG.")
+            photo.seek(0)
+
+        except Exception as e:
+            raise ValidationError(f"Ошибка при обработке изображения: {e}")
         return photo
 
     def clean(self):
@@ -62,3 +74,11 @@ class ProductForm(StyleFormMixin, forms.ModelForm):
         for word in description:
             if word in EXCLUDE_WORDS:
                 self.add_error("description", "Описание продукта содержит запрещенные слова")
+
+
+class ProductModeratorForm(StyleFormMixin, forms.ModelForm):
+    """Класс для редактирования модератором"""
+
+    class Meta:
+        model = Product
+        fields = ("is_published",)

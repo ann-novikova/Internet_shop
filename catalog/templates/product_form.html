@@ -7,7 +7,7 @@
 {% block content %}
 {% include 'includes/incl_menu.html' %}
 <h2>Форма для продукта</h2>
-<form method="post", enctype="multipart/form-data">
+<form method="post" enctype="multipart/form-data">
     {% csrf_token %}
      {{ form.non_field_errors }}
     {{ form.as_p }}

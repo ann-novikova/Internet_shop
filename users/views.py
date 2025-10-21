@@ -1,17 +1,19 @@
+from django.contrib import messages
 from django.contrib.auth import login
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.mail import send_mail
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, UpdateView
-from django.contrib import messages
 
 from config.settings import EMAIL_HOST_USER
-from .forms import UserRegistrationForm, UserProfileEditForm
+
+from .forms import UserProfileEditForm, UserRegistrationForm
 from .models import CustomUser
 
 
 class RegisterView(CreateView):
     """Контроллер для регистрации"""
+
     form_class = UserRegistrationForm
     template_name = "register.html"
     success_url = reverse_lazy("users:login")
@@ -33,6 +35,7 @@ class RegisterView(CreateView):
 
 class UserProfileEditView(LoginRequiredMixin, UpdateView):
     """Контроллер для редактирования профиля"""
+
     model = CustomUser
     form_class = UserProfileEditForm
     template_name = "profile_edit.html"

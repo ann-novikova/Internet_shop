@@ -9,11 +9,15 @@
     <h1 class="text-center">Добро пожаловать на наш сайт!</h1>
     <p class="text-center">Это главная страница нашего сайта.</p>
 </div>
-    <div class="row row-cols-1 row-cols-md-3 g-4">
-        <!-- row-cols-1, row-cols-md-3: для одной колонки на мобильных и трех на средних экранах -->
-        {% for product in products %}
-        <div class="col">  <!-- col: для автоматической компоновки в строку -->
-            <div class="container mt-5">
+<div class="row row-cols-1 row-cols-md-3 g-4">
+    <!-- row-cols-1, row-cols-md-3: для одной колонки на мобильных и трех на средних экранах -->
+    {% if not products %}
+    <h1 class="text-center">Нет опубликованых товаров!</h1>
+    {% endif %}
+    {% for product in products %}
+    {% if product.is_published %}
+    <div class="col">  <!-- col: для автоматической компоновки в строку -->
+        <div class="container mt-5">
             <div class="card" style="width: 18rem;">
                 <img src="{{ product.photo | media_filter }}" class="card-img-top" alt="{{ product.name }}">
                 <div class="card-body">
@@ -27,6 +31,7 @@
             </div>
         </div>
     </div>
+    {% endif %}
     {% endfor %}
 </div>
 
