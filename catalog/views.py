@@ -1,10 +1,12 @@
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.core.exceptions import PermissionDenied
+from django.core.cache import cache
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, DeleteView, DetailView, ListView, TemplateView, UpdateView
 
 from catalog.forms import ProductForm, ProductModeratorForm
-from catalog.models import Product
+from catalog.models import Product, Category
+from catalog.services import get_products_by_category
 
 
 class ProductListView(ListView):
@@ -13,6 +15,13 @@ class ProductListView(ListView):
     model = Product
     template_name = "home.html"
     context_object_name = "products"
+
+    def get_queryset(self):
+        queryset = cache.get('products_list')
+        if not queryset:
+            queryset = super().get_queryset()
+            cache.set('products_list', queryset, 60 * 15)
+        return queryset
 
 
 class ProductDetailView(LoginRequiredMixin, DetailView):
@@ -68,3 +77,20 @@ class ContactView(LoginRequiredMixin, TemplateView):
     """Контроллер для страницы контакты"""
 
     template_name = "contacts.html"
+
+class ListProductsCategoryDetailView(DetailView):
+    model = Category
+    template_name = 'products_by_category.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        category_id = self.kwargs.get('pk')
+        context["categories"] = get_products_by_category(category_id)
+        return context
+
+    def get_queryset(self):
+        queryset = cache.get('list_products')
+        if not queryset:
+            queryset = super().get_queryset()
+            cache.set('list_products', queryset, 60 * 15)
+        return queryset
