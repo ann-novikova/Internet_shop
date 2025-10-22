@@ -10,6 +10,7 @@
   <img src="{{ product.photo | media_filter }}" class="card-img-top">
   <div class="card-body">
     <p class="card-text">Категория: {{ product.category }}</p>
+    <a href="{% url 'catalog:category_product' product.category.pk %}" class="btn btn-secondary">Посмотреть товары в этой категории</a>
     <p class="card-text">Описание: {{ product.description }}</p>
     <p class="card-text">Цена: {{ product.price}}</p>
     <p class="card-text">Обновлено: {{ product.updated_at | date:"d M Y"}}</p>
